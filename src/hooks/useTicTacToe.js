@@ -1,5 +1,5 @@
 import { useState } from "react";
-import checkBoardStateForWinner from "../utils/gameHelpers";
+import { checkBoardStateForWinner, isTie } from "../utils/gameHelpers";
 
 export const useTicTacToe = () => {
   const [boardState, setBoardState] = useState(Array(9).fill(null));
@@ -7,21 +7,29 @@ export const useTicTacToe = () => {
   const [winner, setWinner] = useState(null);
 
   const checkWinner = (latestBoardState) => {
-    setWinner(checkBoardStateForWinner(latestBoardState));
+    const winner = checkBoardStateForWinner(latestBoardState);
 
-    if (boardState.every((cell) => cell !== null)) {
+    if (winner) {
+      setWinner(winner);
+      return;
+    }
+
+    if (isTie(latestBoardState)) {
       setWinner("Tie");
+      return;
     }
   };
 
   const makeMove = (index) => {
-    if (!boardState[index] && !winner) {
-      const newBoardState = [...boardState];
-      newBoardState[index] = currentPlayer;
-      setBoardState(newBoardState);
-      setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
-      checkWinner(newBoardState);
+    if (boardState[index] || winner) {
+      return;
     }
+
+    const newBoardState = [...boardState];
+    newBoardState[index] = currentPlayer;
+    setBoardState(newBoardState);
+    setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
+    checkWinner(newBoardState);
   };
 
   return {

@@ -15,4 +15,9 @@ const checkBoardStateForWinner = (boardState) => {
   return null;
 };
 
-export default checkBoardStateForWinner;
+// Check if all cells are filled then it's a tie
+const isTie = (boardState) => {
+  return boardState.every((cell) => cell !== null);
+};
+
+export { checkBoardStateForWinner, isTie };
