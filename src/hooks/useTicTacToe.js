@@ -25,6 +25,13 @@ export const useTicTacToe = () => {
     checkWinner(newBoardState);
   };
 
+  const restartGame = () => {
+    setBoardState(Array(9).fill(null));
+    setCurrentPlayer("X");
+    setWinner(null);
+    setWinningLine(null);
+  };
+
   let message = winner
     ? winner === "Tie"
       ? "It's a Tie!"
@@ -36,5 +43,7 @@ export const useTicTacToe = () => {
     makeMove,
     winningLine,
     message,
+    restartGame,
+    isTie: winner === "Tie",
   };
 };
