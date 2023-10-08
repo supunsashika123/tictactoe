@@ -1,36 +1,35 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import Cell from "./Cell";
 import { useTicTacToe } from "../hooks/useTicTacToe";
 
 const Board = () => {
-  const { boardState, currentPlayer, winner, makeMove } = useTicTacToe();
+  const { boardState, winningLine, makeMove, message } = useTicTacToe();
 
   const handleCellClick = (index) => {
     makeMove(index);
   };
 
-  let message = winner === "Tie" ? "It's a tie!" : `${winner} wins!`;
-  if (winner) {
-    alert(message);
-  }
-
   return (
-    <>
+    <Box>
       <Typography variant="h6" align="center" gutterBottom>
-        {winner ? `${winner} wins!` : `Current Player: ${currentPlayer}`}
+        {message}
       </Typography>
-      <Grid container spacing={1}>
-        {boardState.map((cellValue, index) => (
-          <Cell
-            key={index}
-            value={cellValue}
-            onClick={() => handleCellClick(index)}
-          />
-        ))}
-      </Grid>
-    </>
+      <Box display="flex" justifyContent="center" width="100%">
+        <Grid container spacing={2} sx={{ maxWidth: 350 }}>
+          {boardState.map((cellValue, index) => (
+            <Cell
+              key={index}
+              value={cellValue}
+              onClick={() => handleCellClick(index)}
+              highlight={winningLine && winningLine.includes(index)}
+            />
+          ))}
+        </Grid>
+      </Box>
+    </Box>
   );
 };
 
