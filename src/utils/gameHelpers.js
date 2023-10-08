@@ -1,23 +1,21 @@
-import winConditions from "../constants/winConditions";
+import winningLines from "../constants/winningLines";
 
-const checkBoardStateForWinner = (boardState) => {
-  for (let condition of winConditions) {
-    const [a, b, c] = condition;
-
+const checkBoardStateForWinner = (board) => {
+  for (let line of winningLines) {
     if (
-      boardState[a] &&
-      boardState[a] === boardState[b] &&
-      boardState[a] === boardState[c]
+      board[line[0]] &&
+      board[line[0]] === board[line[1]] &&
+      board[line[0]] === board[line[2]]
     ) {
-      return boardState[a]; // return 'X' or 'O' depending on who wins
+      return { winner: board[line[0]], winningLine: line };
     }
   }
-  return null;
+
+  if (board.every((cell) => cell !== null)) {
+    return { winner: "Tie", winningLine: null };
+  }
+
+  return { winner: null, winningLine: null };
 };
 
-// Check if all cells are filled then it's a tie
-const isTie = (boardState) => {
-  return boardState.every((cell) => cell !== null);
-};
-
-export { checkBoardStateForWinner, isTie };
+export { checkBoardStateForWinner };
