@@ -20,7 +20,7 @@ const Board = () => {
 
   return (
     <Box>
-      <Typography variant="h6" align="center" gutterBottom>
+      <Typography variant="h6" align="center" gutterBottom data-testid="message">
         {message}
       </Typography>
 
@@ -29,6 +29,7 @@ const Board = () => {
           {boardState.map((cellValue, index) => (
             <Cell
               key={index}
+              index={index}
               value={cellValue}
               onClick={() => handleCellClick(index)}
               highlight={winningLine && winningLine.includes(index)}

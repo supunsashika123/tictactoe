@@ -2,10 +2,11 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 
-const Cell = ({ value, onClick, highlight }) => {
+const Cell = ({ value, onClick, highlight, index }) => {
   return (
     <Grid item xs={4}>
       <Button
+        data-testid={`cell-${index}`}
         variant="outlined"
         onClick={onClick}
         disabled={!!value}
