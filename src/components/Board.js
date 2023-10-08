@@ -11,13 +11,9 @@ const Board = () => {
     makeMove(index);
   };
 
+  let message = winner === "Tie" ? "It's a tie!" : `${winner} wins!`;
   if (winner) {
-    alert(`${winner} wins!`);
-  }
-
-  const isTie = winner === "Tie";
-  if (isTie) {
-    alert("It's a tie!");
+    alert(message);
   }
 
   return (
@@ -28,7 +24,7 @@ const Board = () => {
       <Grid container spacing={1}>
         {boardState.map((cellValue, index) => (
           <Cell
-            index={index}
+            key={index}
             value={cellValue}
             onClick={() => handleCellClick(index)}
           />
