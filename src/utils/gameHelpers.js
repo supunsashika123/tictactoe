@@ -1,6 +1,6 @@
 import winConditions from "../constants/winConditions";
 
-const checkWinner = (boardState) => {
+const checkBoardStateForWinner = (boardState) => {
   for (let condition of winConditions) {
     const [a, b, c] = condition;
 
@@ -15,4 +15,4 @@ const checkWinner = (boardState) => {
   return null;
 };
 
-export default checkWinner;
+export default checkBoardStateForWinner;

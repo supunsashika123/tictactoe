@@ -1,29 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Cell from "./Cell";
-import checkWinner from "../utils/gameHelpers";
+import { useTicTacToe } from "../hooks/useTicTacToe";
 
 const Board = () => {
-  const [boardState, setBoardState] = useState(Array(9).fill(null));
-  const [currentPlayer, setCurrentPlayer] = useState("X");
+  const { boardState, currentPlayer, winner, makeMove } = useTicTacToe();
 
   const handleCellClick = (index) => {
-    if (!boardState[index]) {
-      const newBoardState = [...boardState];
-      newBoardState[index] = currentPlayer;
-
-      setBoardState(newBoardState);
-      setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
-    }
+    makeMove(index);
   };
 
-  const winner = checkWinner(boardState);
   if (winner) {
     alert(`${winner} wins!`);
   }
 
-  const isTie = boardState.every((cell) => cell !== null);
+  const isTie = winner === "Tie";
   if (isTie) {
     alert("It's a tie!");
   }
